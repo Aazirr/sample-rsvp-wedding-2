@@ -12,4 +12,4 @@
 - [x] Run production build verification.
 - [x] Run browser visual QA on desktop and mobile.
 - [x] Commit changes with a prefixed commit message.
-- [ ] Push changes to remote repository. Blocked: no git remote is configured in this package folder.
+- [x] Push changes to remote repository.
