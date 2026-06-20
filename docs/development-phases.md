@@ -22,3 +22,4 @@
 - [x] Rebuild the RSVP frame as a centered overlay and tighten mobile divider alignment.
 - [x] Soften the RSVP frame and recenter the form column for mobile and desktop.
 - [x] Convert the RSVP frame to a centered SVG image layer with a fixed aspect ratio for desktop and mobile.
+- [x] Remove the RSVP card shell so the SVG frame can act as the visible container.
