@@ -393,18 +393,22 @@ export default function App() {
           </div>
           <div className="entourage-grid">
             <div className="pair-row pair-row-two">
-              <article className="people-card">
-                <Icon name="couple" />
-                <h3>Maid of Honor</h3>
+              <article className="entourage-card">
+                <div className="card-head">
+                  <Icon name="couple" />
+                  <h3>Maid of Honor</h3>
+                </div>
                 <ul>
                   {entourageGroups.find((group) => group.role === "Maid of Honor").members.map((member) => (
                     <li key={member}>{member}</li>
                   ))}
                 </ul>
               </article>
-              <article className="people-card">
-                <Icon name="couple" />
-                <h3>Best Man</h3>
+              <article className="entourage-card">
+                <div className="card-head">
+                  <Icon name="couple" />
+                  <h3>Best Man</h3>
+                </div>
                 <ul>
                   {entourageGroups.find((group) => group.role === "Best Man").members.map((member) => (
                     <li key={member}>{member}</li>
@@ -414,18 +418,22 @@ export default function App() {
             </div>
 
             <div className="pair-row pair-row-two">
-              <article className="people-card">
-                <Icon name="family" />
-                <h3>Parents of the Bride</h3>
+              <article className="entourage-card">
+                <div className="card-head">
+                  <Icon name="family" />
+                  <h3>Parents of the Bride</h3>
+                </div>
                 <ul>
                   {entourageGroups.find((group) => group.role === "Parents of the Bride").members.map((member) => (
                     <li key={member}>{member}</li>
                   ))}
                 </ul>
               </article>
-              <article className="people-card">
-                <Icon name="family" />
-                <h3>Parents of the Groom</h3>
+              <article className="entourage-card">
+                <div className="card-head">
+                  <Icon name="family" />
+                  <h3>Parents of the Groom</h3>
+                </div>
                 <ul>
                   {entourageGroups.find((group) => group.role === "Parents of the Groom").members.map((member) => (
                     <li key={member}>{member}</li>
@@ -435,18 +443,22 @@ export default function App() {
             </div>
 
             <div className="pair-row pair-row-two">
-              <article className="people-card">
-                <Icon name="petals" />
-                <h3>Bridesmaids</h3>
+              <article className="entourage-card">
+                <div className="card-head">
+                  <Icon name="petals" />
+                  <h3>Bridesmaids</h3>
+                </div>
                 <ul>
                   {entourageGroups.find((group) => group.role === "Bridesmaids").members.map((member) => (
                     <li key={member}>{member}</li>
                   ))}
                 </ul>
               </article>
-              <article className="people-card">
-                <Icon name="ring" />
-                <h3>Groomsmen</h3>
+              <article className="entourage-card">
+                <div className="card-head">
+                  <Icon name="ring" />
+                  <h3>Groomsmen</h3>
+                </div>
                 <ul>
                   {entourageGroups.find((group) => group.role === "Groomsmen").members.map((member) => (
                     <li key={member}>{member}</li>
@@ -456,18 +468,22 @@ export default function App() {
             </div>
 
             <div className="pair-row pair-row-two">
-              <article className="people-card">
-                <Icon name="ring" />
-                <h3>Bearers</h3>
+              <article className="entourage-card">
+                <div className="card-head">
+                  <Icon name="ring" />
+                  <h3>Bearers</h3>
+                </div>
                 <ul>
                   {entourageGroups.find((group) => group.role === "Bearers").members.map((member) => (
                     <li key={member}>{member}</li>
                   ))}
                 </ul>
               </article>
-              <article className="people-card">
-                <Icon name="petals" />
-                <h3>Flower Girls</h3>
+              <article className="entourage-card">
+                <div className="card-head">
+                  <Icon name="petals" />
+                  <h3>Flower Girls</h3>
+                </div>
                 <ul>
                   {entourageGroups.find((group) => group.role === "Flower Girls").members.map((member) => (
                     <li key={member}>{member}</li>

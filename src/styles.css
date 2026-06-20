@@ -589,15 +589,12 @@ address {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-.people-card,
+.entourage-card,
 .secondary-list article {
   display: grid;
   gap: 12px;
   align-content: start;
-  padding: 22px;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  background: rgba(255, 253, 251, 0.74);
+  padding: 16px 0 0;
 }
 
 .icon {
@@ -606,7 +603,23 @@ address {
   color: var(--blush-deep);
 }
 
-.people-card ul,
+.card-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.card-head h3 {
+  margin: 0;
+  min-width: 0;
+}
+
+.entourage-card {
+  padding: 0;
+}
+
+.entourage-card ul,
 .principal-list ul {
   display: grid;
   gap: 8px;
@@ -615,11 +628,21 @@ address {
   list-style: none;
 }
 
-.people-card li,
+.entourage-card li,
 .principal-list li,
 .secondary-list p {
   color: var(--muted);
   line-height: 1.6;
+}
+
+.entourage-card h3,
+.principal-list h3,
+.secondary-list h3 {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.05;
 }
 
 .sponsor-layout {
@@ -981,7 +1004,6 @@ small {
     margin: 6px 0 0;
   }
 
-  .entourage-grid,
   .secondary-list,
   .gallery-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1048,11 +1070,41 @@ small {
 
   .attendance-toggle,
   .conditional-fields,
-  .entourage-grid,
   .secondary-list,
-  .gallery-grid,
-  .pair-row-two {
+  .gallery-grid {
     grid-template-columns: 1fr;
+  }
+
+  .pair-row-two {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .entourage-card {
+    gap: 10px;
+  }
+
+  .card-head {
+    gap: 8px;
+    align-items: center;
+  }
+
+  .card-head .icon {
+    width: 24px;
+    height: 24px;
+    flex: none;
+  }
+
+  .entourage-card h3,
+  .principal-list h3,
+  .secondary-list h3 {
+    font-family: var(--display);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    line-height: 1.05;
+  }
+
+  .entourage-card ul {
+    padding-left: 34px;
   }
 
   .principal-list ul {

@@ -16,3 +16,4 @@
 - [x] Remove the navbar on mobile view.
 - [x] Restore separate entourage and sponsors sections; pair entourage names side by side.
 - [x] Compress the mobile gallery into a slider-style rail.
+- [x] Remove square entourage containers and restore serif typography in entourage/sponsors.
