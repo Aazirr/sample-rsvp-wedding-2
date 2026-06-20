@@ -775,24 +775,28 @@ address {
 
 .rsvp-card {
   position: relative;
+  display: grid;
+  place-items: center;
   overflow: hidden;
-  padding: clamp(34px, 5vw, 56px);
+  padding: clamp(28px, 4.5vw, 52px);
   background: color-mix(in oklab, var(--white) 92%, var(--cream));
   box-shadow: var(--shadow);
 }
 
 .rsvp-frame {
   position: absolute;
-  inset: clamp(18px, 2.8vw, 30px);
-  background: url("/assets/frame-rsvp.svg") center / contain no-repeat;
+  inset: clamp(14px, 2vw, 24px);
+  width: calc(100% - clamp(28px, 4vw, 48px));
+  height: calc(100% - clamp(28px, 4vw, 48px));
+  object-fit: fill;
   pointer-events: none;
-  opacity: 0.7;
+  opacity: 0.58;
 }
 
 .rsvp-content {
   position: relative;
   z-index: 1;
-  max-width: 680px;
+  width: min(100%, 620px);
   margin: 0 auto;
 }
 
@@ -1165,12 +1169,14 @@ small {
   }
 
   .rsvp-card {
-    padding: 22px 14px;
+    padding: 18px 12px;
   }
 
   .rsvp-frame {
-    inset: 12px;
-    opacity: 0.58;
+    inset: 10px;
+    width: calc(100% - 20px);
+    height: calc(100% - 20px);
+    opacity: 0.46;
   }
 
   .gallery-tile:nth-child(1),

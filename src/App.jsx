@@ -557,7 +557,7 @@ export default function App() {
           </div>
 
           <div className="rsvp-card">
-            <span className="rsvp-frame" aria-hidden="true" />
+            <img className="rsvp-frame" src="/assets/frame-rsvp.svg" alt="" aria-hidden="true" />
             <div className="rsvp-content">
               {submitted ? (
                 <div className="thank-you" role="status">
