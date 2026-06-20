@@ -344,12 +344,16 @@ h3,
 }
 
 .letter-card,
-.rsvp-card,
-.principal-list {
+.rsvp-card {
   position: relative;
   border: 1px solid color-mix(in oklab, var(--line) 76%, white);
   border-radius: 14px;
   background: color-mix(in oklab, var(--white) 92%, var(--cream));
+}
+
+.entourage-section,
+.sponsors-section {
+  background: color-mix(in oklab, var(--cream) 82%, var(--white));
 }
 
 .letter-card {
@@ -658,10 +662,7 @@ address {
   display: grid;
   gap: 18px;
   padding: 0;
-  border: 0;
-  border-radius: 0;
   background: transparent;
-  box-shadow: none;
 }
 
 .principal-list .icon,
@@ -1077,11 +1078,17 @@ small {
 
   .section-divider {
     width: min(100% - 44px, 400px);
+    justify-content: center;
   }
 
   .section-divider::before,
   .section-divider::after {
     display: none;
+  }
+
+  .section-divider img {
+    flex: 0 0 auto;
+    margin: 0 auto;
   }
 
   .swatch-panel {
@@ -1091,6 +1098,11 @@ small {
   .attendance-toggle,
   .conditional-fields,
   .gallery-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sponsor-layout,
+  .secondary-list {
     grid-template-columns: 1fr;
   }
 
@@ -1128,12 +1140,6 @@ small {
 
   .principal-list ul {
     columns: 1;
-  }
-
-  .principal-list,
-  .secondary-list article {
-    justify-items: center;
-    text-align: center;
   }
 
   .principal-list,
