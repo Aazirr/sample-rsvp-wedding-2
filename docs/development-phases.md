@@ -13,3 +13,4 @@
 - [x] Run browser visual QA on desktop and mobile.
 - [x] Commit changes with a prefixed commit message.
 - [x] Push changes to remote repository.
+- [x] Remove the sticky navbar on mobile view.
