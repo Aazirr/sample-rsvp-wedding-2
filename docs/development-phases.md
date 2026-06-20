@@ -19,3 +19,4 @@
 - [x] Remove square entourage containers and restore serif typography in entourage/sponsors.
 - [x] Center entourage names on desktop and sponsors on mobile; remove principal sponsor framing.
 - [x] Use a plain colored background for entourage and sponsors; center the divider leaf on mobile.
+- [x] Rebuild the RSVP frame as a centered overlay and tighten mobile divider alignment.

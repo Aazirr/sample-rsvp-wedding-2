@@ -557,70 +557,73 @@ export default function App() {
           </div>
 
           <div className="rsvp-card">
-            {submitted ? (
-              <div className="thank-you" role="status">
-                <img src="/assets/monogram.svg" alt="" />
-                <h3>Thank you.</h3>
-                <p>
-                  Your response has been saved for this demo. In production, this form can
-                  connect to Google Sheets, Airtable, or a database endpoint.
-                </p>
-              </div>
-            ) : (
-              <form onSubmit={submitRsvp} noValidate>
-                <label className="honeypot">
-                  Leave this blank
-                  <input name="honeypot" value={formData.honeypot} onChange={updateForm} tabIndex="-1" autoComplete="off" />
-                </label>
+            <span className="rsvp-frame" aria-hidden="true" />
+            <div className="rsvp-content">
+              {submitted ? (
+                <div className="thank-you" role="status">
+                  <img src="/assets/monogram.svg" alt="" />
+                  <h3>Thank you.</h3>
+                  <p>
+                    Your response has been saved for this demo. In production, this form can
+                    connect to Google Sheets, Airtable, or a database endpoint.
+                  </p>
+                </div>
+              ) : (
+                <form onSubmit={submitRsvp} noValidate>
+                  <label className="honeypot">
+                    Leave this blank
+                    <input name="honeypot" value={formData.honeypot} onChange={updateForm} tabIndex="-1" autoComplete="off" />
+                  </label>
 
-                <label>
-                  <span>Full Name</span>
-                  <input name="fullName" value={formData.fullName} onChange={updateForm} required autoComplete="name" />
-                  {errors.fullName && <small>{errors.fullName}</small>}
-                </label>
+                  <label>
+                    <span>Full Name</span>
+                    <input name="fullName" value={formData.fullName} onChange={updateForm} required autoComplete="name" />
+                    {errors.fullName && <small>{errors.fullName}</small>}
+                  </label>
 
-                <fieldset>
-                  <legend>Attendance</legend>
-                  <div className="attendance-toggle">
-                    <label>
-                      <input type="radio" name="attendance" value="yes" checked={formData.attendance === "yes"} onChange={updateForm} />
-                      <span>Joyfully Accepts</span>
-                    </label>
-                    <label>
-                      <input type="radio" name="attendance" value="no" checked={formData.attendance === "no"} onChange={updateForm} />
-                      <span>Regretfully Declines</span>
-                    </label>
-                  </div>
-                  {errors.attendance && <small>{errors.attendance}</small>}
-                </fieldset>
+                  <fieldset>
+                    <legend>Attendance</legend>
+                    <div className="attendance-toggle">
+                      <label>
+                        <input type="radio" name="attendance" value="yes" checked={formData.attendance === "yes"} onChange={updateForm} />
+                        <span>Joyfully Accepts</span>
+                      </label>
+                      <label>
+                        <input type="radio" name="attendance" value="no" checked={formData.attendance === "no"} onChange={updateForm} />
+                        <span>Regretfully Declines</span>
+                      </label>
+                    </div>
+                    {errors.attendance && <small>{errors.attendance}</small>}
+                  </fieldset>
 
-                {attending && (
-                  <div className="conditional-fields">
-                    <label>
-                      <span>Number of Guests</span>
-                      <select name="guests" value={formData.guests} onChange={updateForm}>
-                        {[1, 2, 3, 4].map((count) => <option key={count}>{count}</option>)}
-                      </select>
-                    </label>
-                    <label>
-                      <span>Meal Choice</span>
-                      <select name="meal" value={formData.meal} onChange={updateForm}>
-                        {mealOptions.map((meal) => <option key={meal}>{meal}</option>)}
-                      </select>
-                      {errors.meal && <small>{errors.meal}</small>}
-                    </label>
-                  </div>
-                )}
+                  {attending && (
+                    <div className="conditional-fields">
+                      <label>
+                        <span>Number of Guests</span>
+                        <select name="guests" value={formData.guests} onChange={updateForm}>
+                          {[1, 2, 3, 4].map((count) => <option key={count}>{count}</option>)}
+                        </select>
+                      </label>
+                      <label>
+                        <span>Meal Choice</span>
+                        <select name="meal" value={formData.meal} onChange={updateForm}>
+                          {mealOptions.map((meal) => <option key={meal}>{meal}</option>)}
+                        </select>
+                        {errors.meal && <small>{errors.meal}</small>}
+                      </label>
+                    </div>
+                  )}
 
-                <label className="consent">
-                  <input type="checkbox" required />
-                  <span>I understand this is a demo RSVP and production storage is a TODO.</span>
-                </label>
+                  <label className="consent">
+                    <input type="checkbox" required />
+                    <span>I understand this is a demo RSVP and production storage is a TODO.</span>
+                  </label>
 
-                <button className="primary-button" type="submit">Send Response</button>
-                <p className="form-note">TODO: replace local demo storage with POST /api/rsvp.</p>
-              </form>
-            )}
+                  <button className="primary-button" type="submit">Send Response</button>
+                  <p className="form-note">TODO: replace local demo storage with POST /api/rsvp.</p>
+                </form>
+              )}
+            </div>
           </div>
         </section>
       </main>
