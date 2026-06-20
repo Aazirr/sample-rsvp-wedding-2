@@ -1173,19 +1173,21 @@ small {
   }
 
   .rsvp-card {
-    padding: 8px 6px 0;
+    overflow: hidden;
+    padding: 0;
+    border: 1px solid color-mix(in oklab, var(--line) 78%, white);
+    border-radius: 14px;
+    background: color-mix(in oklab, var(--white) 94%, var(--cream));
+    box-shadow: var(--shadow);
   }
 
   .rsvp-frame {
-    width: min(100%, 384px);
-    opacity: 0.58;
-    transform: translateY(-4px) scale(1.08);
-    transform-origin: center top;
+    display: none;
   }
 
   .rsvp-content {
-    width: min(100%, 320px);
-    padding: 20px 8px 24px;
+    width: 100%;
+    padding: 18px 14px 22px;
   }
 
   .rsvp-content form {

@@ -24,3 +24,4 @@
 - [x] Convert the RSVP frame to a centered SVG image layer with a fixed aspect ratio for desktop and mobile.
 - [x] Remove the RSVP card shell so the SVG frame can act as the visible container.
 - [x] Tighten the mobile RSVP spacing so the form sits inside the decorative frame.
+- [x] Simplify the mobile RSVP into a readable card so the decorative frame no longer competes with the form.
