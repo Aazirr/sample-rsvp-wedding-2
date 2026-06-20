@@ -17,3 +17,4 @@
 - [x] Restore separate entourage and sponsors sections; pair entourage names side by side.
 - [x] Compress the mobile gallery into a slider-style rail.
 - [x] Remove square entourage containers and restore serif typography in entourage/sponsors.
+- [x] Center entourage names on desktop and sponsors on mobile; remove principal sponsor framing.
