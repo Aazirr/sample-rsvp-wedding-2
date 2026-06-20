@@ -478,9 +478,9 @@ h3,
 
 .timeline-item h3,
 .dress-copy h3,
-.people-card h3,
-.principal-list h3,
-.secondary-list h3,
+.people-card h4,
+.principal-list h4,
+.secondary-list h4,
 .thank-you h3 {
   margin: 0;
   font-size: clamp(1.35rem, 2.4vw, 1.9rem);
@@ -579,6 +579,38 @@ address {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
   gap: 16px;
+}
+
+.people-split-heading {
+  max-width: 760px;
+}
+
+.people-split-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+  align-items: start;
+}
+
+.people-panel {
+  display: grid;
+  gap: 18px;
+  padding: 28px;
+  border: 1px solid color-mix(in oklab, var(--line) 86%, white);
+  border-radius: 14px;
+  background: color-mix(in oklab, var(--white) 90%, var(--cream));
+  box-shadow: var(--shadow);
+}
+
+.panel-head {
+  display: grid;
+  gap: 8px;
+}
+
+.panel-head p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.7;
 }
 
 .people-card,
@@ -925,6 +957,10 @@ small {
     grid-template-columns: 1fr;
   }
 
+  .people-split-grid {
+    grid-template-columns: 1fr;
+  }
+
   .timeline {
     grid-template-columns: 1fr;
   }
@@ -1015,7 +1051,8 @@ small {
   .attendance-toggle,
   .conditional-fields,
   .secondary-list,
-  .gallery-grid {
+  .gallery-grid,
+  .people-split-grid {
     grid-template-columns: 1fr;
   }
 

@@ -14,3 +14,4 @@
 - [x] Commit changes with a prefixed commit message.
 - [x] Push changes to remote repository.
 - [x] Remove the navbar on mobile view.
+- [x] Rework entourage and sponsors into a side-by-side split layout.
