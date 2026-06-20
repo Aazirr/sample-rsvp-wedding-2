@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 const navItems = [
   ["story", "Our Story"],
@@ -182,6 +182,7 @@ export default function App() {
   const [lightboxIndex, setLightboxIndex] = useState(null);
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState({});
+  const galleryRailRef = useRef(null);
   const [formData, setFormData] = useState({
     fullName: "",
     attendance: "",
@@ -192,6 +193,14 @@ export default function App() {
 
   const selectedPhoto = lightboxIndex === null ? null : galleryPhotos[lightboxIndex];
   const attending = formData.attendance === "yes";
+
+  const scrollGallery = (direction) => {
+    const rail = galleryRailRef.current;
+    if (!rail) return;
+
+    const distance = Math.round(rail.clientWidth * 0.84);
+    rail.scrollBy({ left: direction * distance, behavior: "smooth" });
+  };
 
   const googleCalendarUrl = useMemo(() => {
     const params = new URLSearchParams({
@@ -436,12 +445,22 @@ export default function App() {
             <h2>Photos</h2>
             <p>A few frames from the afternoon we practiced being still long enough for forever.</p>
           </div>
-          <div className="gallery-grid">
+          <div className="gallery-shell">
+            <div className="gallery-mobile-controls" aria-label="Gallery navigation">
+              <button className="gallery-nav-button" type="button" onClick={() => scrollGallery(-1)} aria-label="Previous photo">
+                ‹
+              </button>
+              <button className="gallery-nav-button" type="button" onClick={() => scrollGallery(1)} aria-label="Next photo">
+                ›
+              </button>
+            </div>
+            <div className="gallery-grid" ref={galleryRailRef}>
             {galleryPhotos.map((photo, index) => (
               <button key={photo.src} className="gallery-tile" type="button" onClick={() => setLightboxIndex(index)}>
                 <img src={photo.src} alt={photo.alt} loading="lazy" />
               </button>
             ))}
+            </div>
           </div>
         </section>
 

@@ -15,3 +15,4 @@
 - [x] Push changes to remote repository.
 - [x] Remove the navbar on mobile view.
 - [x] Rework entourage and sponsors into a side-by-side split layout.
+- [x] Compress the mobile gallery into a slider-style rail.

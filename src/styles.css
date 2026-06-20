@@ -680,6 +680,31 @@ address {
   gap: 12px;
 }
 
+.gallery-shell {
+  display: grid;
+  gap: 12px;
+}
+
+.gallery-mobile-controls {
+  display: none;
+  gap: 10px;
+  justify-content: center;
+}
+
+.gallery-nav-button {
+  display: inline-flex;
+  width: 42px;
+  height: 42px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--white);
+  color: var(--ink);
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
 .gallery-tile {
   min-height: 0;
   padding: 0;
@@ -1077,6 +1102,42 @@ small {
     top: auto;
     bottom: 18px;
     transform: none;
+  }
+
+  .gallery-section {
+    padding-top: 38px;
+    padding-bottom: 38px;
+  }
+
+  .gallery-shell {
+    gap: 10px;
+  }
+
+  .gallery-mobile-controls {
+    display: flex;
+  }
+
+  .gallery-grid {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 2px 2px 8px;
+    scroll-snap-type: x mandatory;
+    scroll-padding: 0 12px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .gallery-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .gallery-tile {
+    flex: 0 0 82%;
+    scroll-snap-align: center;
+  }
+
+  .gallery-tile img {
+    min-height: 290px;
   }
 }
 
