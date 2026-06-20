@@ -386,55 +386,122 @@ export default function App() {
 
         <Divider />
 
-        <section className="section people-split" id="entourage">
-          <div className="people-split-heading section-heading">
-            <h2>Entourage & Sponsors</h2>
-            <p>The names nearest to the vows, set side by side for family to scan easily.</p>
+        <section className="section entourage-section" id="entourage">
+          <div className="section-heading">
+            <h2>Entourage</h2>
+            <p>The family and friends walking nearest to our vows.</p>
           </div>
-
-          <div className="people-split-grid">
-            <article className="people-panel" id="people-entourage">
-              <div className="panel-head">
-                <h3>Entourage</h3>
-                <p>The family and friends walking nearest to our vows.</p>
-              </div>
-              <div className="people-grid">
-                {entourageGroups.map((group) => (
-                  <article className="people-card" key={group.role}>
-                    <Icon name={group.icon} />
-                    <h4>{group.role}</h4>
-                    <ul>
-                      {group.members.map((member) => <li key={member}>{member}</li>)}
-                    </ul>
-                  </article>
-                ))}
-              </div>
-            </article>
-
-            <article className="people-panel" id="people-sponsors">
-              <div className="panel-head">
-                <h3>Sponsors</h3>
-                <p>With gratitude to the witnesses who will bless and stand beside us.</p>
-              </div>
-              <div className="sponsor-layout">
-                <article className="principal-list">
-                  <Icon name="witness" />
-                  <h4>Principal Sponsors</h4>
-                  <ul>
-                    {sponsors.principal.map((name) => <li key={name}>{name}</li>)}
-                  </ul>
-                </article>
-                <div className="secondary-list">
-                  {sponsors.secondary.map((group) => (
-                    <article key={group.role}>
-                      <Icon name={group.icon} />
-                      <h4>{group.role}</h4>
-                      <p>{group.members.join(" and ")}</p>
-                    </article>
+          <div className="entourage-grid">
+            <div className="pair-row pair-row-two">
+              <article className="people-card">
+                <Icon name="couple" />
+                <h3>Maid of Honor</h3>
+                <ul>
+                  {entourageGroups.find((group) => group.role === "Maid of Honor").members.map((member) => (
+                    <li key={member}>{member}</li>
                   ))}
-                </div>
-              </div>
+                </ul>
+              </article>
+              <article className="people-card">
+                <Icon name="couple" />
+                <h3>Best Man</h3>
+                <ul>
+                  {entourageGroups.find((group) => group.role === "Best Man").members.map((member) => (
+                    <li key={member}>{member}</li>
+                  ))}
+                </ul>
+              </article>
+            </div>
+
+            <div className="pair-row pair-row-two">
+              <article className="people-card">
+                <Icon name="family" />
+                <h3>Parents of the Bride</h3>
+                <ul>
+                  {entourageGroups.find((group) => group.role === "Parents of the Bride").members.map((member) => (
+                    <li key={member}>{member}</li>
+                  ))}
+                </ul>
+              </article>
+              <article className="people-card">
+                <Icon name="family" />
+                <h3>Parents of the Groom</h3>
+                <ul>
+                  {entourageGroups.find((group) => group.role === "Parents of the Groom").members.map((member) => (
+                    <li key={member}>{member}</li>
+                  ))}
+                </ul>
+              </article>
+            </div>
+
+            <div className="pair-row pair-row-two">
+              <article className="people-card">
+                <Icon name="petals" />
+                <h3>Bridesmaids</h3>
+                <ul>
+                  {entourageGroups.find((group) => group.role === "Bridesmaids").members.map((member) => (
+                    <li key={member}>{member}</li>
+                  ))}
+                </ul>
+              </article>
+              <article className="people-card">
+                <Icon name="ring" />
+                <h3>Groomsmen</h3>
+                <ul>
+                  {entourageGroups.find((group) => group.role === "Groomsmen").members.map((member) => (
+                    <li key={member}>{member}</li>
+                  ))}
+                </ul>
+              </article>
+            </div>
+
+            <div className="pair-row pair-row-two">
+              <article className="people-card">
+                <Icon name="ring" />
+                <h3>Bearers</h3>
+                <ul>
+                  {entourageGroups.find((group) => group.role === "Bearers").members.map((member) => (
+                    <li key={member}>{member}</li>
+                  ))}
+                </ul>
+              </article>
+              <article className="people-card">
+                <Icon name="petals" />
+                <h3>Flower Girls</h3>
+                <ul>
+                  {entourageGroups.find((group) => group.role === "Flower Girls").members.map((member) => (
+                    <li key={member}>{member}</li>
+                  ))}
+                </ul>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <Divider />
+
+        <section className="section sponsors-section" id="sponsors">
+          <div className="section-heading">
+            <h2>Sponsors</h2>
+            <p>With gratitude to the witnesses who will bless and stand beside us.</p>
+          </div>
+          <div className="sponsor-layout">
+            <article className="principal-list">
+              <Icon name="witness" />
+              <h3>Principal Sponsors</h3>
+              <ul>
+                {sponsors.principal.map((name) => <li key={name}>{name}</li>)}
+              </ul>
             </article>
+            <div className="secondary-list">
+              {sponsors.secondary.map((group) => (
+                <article key={group.role}>
+                  <Icon name={group.icon} />
+                  <h3>{group.role}</h3>
+                  <p>{group.members.join(" and ")}</p>
+                </article>
+              ))}
+            </div>
           </div>
         </section>
 
