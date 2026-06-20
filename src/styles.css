@@ -1173,17 +1173,37 @@ small {
   }
 
   .rsvp-card {
-    padding: 12px 10px;
+    padding: 8px 6px 0;
   }
 
   .rsvp-frame {
-    width: min(100%, 360px);
-    opacity: 0.62;
+    width: min(100%, 384px);
+    opacity: 0.58;
+    transform: translateY(-4px) scale(1.08);
+    transform-origin: center top;
   }
 
   .rsvp-content {
-    width: min(100%, 328px);
-    padding: 32px 10px 36px;
+    width: min(100%, 320px);
+    padding: 20px 8px 24px;
+  }
+
+  .rsvp-content form {
+    gap: 14px;
+  }
+
+  .rsvp-content label span,
+  .rsvp-content legend {
+    font-size: 0.88rem;
+  }
+
+  .rsvp-content input,
+  .rsvp-content select {
+    min-height: 44px;
+  }
+
+  .attendance-toggle span {
+    min-height: 48px;
   }
 
   .gallery-tile:nth-child(1),
