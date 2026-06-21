@@ -26,3 +26,5 @@
 - [x] Tighten the mobile RSVP spacing so the form sits inside the decorative frame.
 - [x] Simplify the mobile RSVP into a readable card so the decorative frame no longer competes with the form.
 - [x] Regenerate the larger decorative assets as PNGs and repoint the site to them.
+- [x] Lower the botanical pattern contrast and add cream content panels for readability.
+- [x] Rebuild the schedule timeline so the rail and markers share the same layout column.

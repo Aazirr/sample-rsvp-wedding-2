@@ -331,12 +331,16 @@ export default function App() {
           <div className="timeline" aria-label="Wedding day schedule">
             {schedule.map((item) => (
               <article className="timeline-item" key={item.title}>
-                <span className="timeline-marker" aria-hidden="true" />
-                <time>{item.time}</time>
-                <h3>{item.title}</h3>
-                <p className="venue">{item.venue}</p>
-                <p>{item.copy}</p>
-                <address>{item.address}</address>
+                <span className="timeline-rail" aria-hidden="true">
+                  <span className="timeline-marker" aria-hidden="true" />
+                </span>
+                <div className="timeline-body">
+                  <time>{item.time}</time>
+                  <h3>{item.title}</h3>
+                  <p className="venue">{item.venue}</p>
+                  <p>{item.copy}</p>
+                  <address>{item.address}</address>
+                </div>
               </article>
             ))}
           </div>

@@ -5,13 +5,15 @@
   --cream: oklch(0.949 0.023 74);
   --white: oklch(0.998 0.003 78);
   --ink: oklch(0.25 0.014 45);
-  --muted: oklch(0.43 0.018 72);
+  --muted: oklch(0.32 0.012 72);
   --blush: oklch(0.82 0.07 19);
   --blush-deep: oklch(0.61 0.096 20);
   --sage: oklch(0.67 0.055 138);
   --sage-deep: oklch(0.48 0.057 138);
   --gold: oklch(0.72 0.09 83);
   --line: oklch(0.84 0.026 73);
+  --panel: rgba(250, 245, 235, 0.86);
+  --panel-border: color-mix(in oklab, var(--line) 68%, white);
   --shadow: 0 8px 24px rgba(70, 48, 36, 0.11);
   --display: "Bodoni Moda", Georgia, serif;
   --body: "Manrope", "Segoe UI", sans-serif;
@@ -45,9 +47,9 @@ body::before {
   inset: 0;
   pointer-events: none;
   background:
-    linear-gradient(180deg, rgba(255, 253, 251, 0.72), rgba(251, 247, 240, 0.82)),
-    radial-gradient(circle at 12% 18%, color-mix(in oklab, var(--blush) 28%, transparent), transparent 30%),
-    radial-gradient(circle at 88% 42%, color-mix(in oklab, var(--sage) 22%, transparent), transparent 32%);
+    linear-gradient(180deg, rgba(250, 245, 235, 0.88), rgba(250, 245, 235, 0.95)),
+    radial-gradient(circle at 12% 18%, color-mix(in oklab, var(--blush) 14%, transparent), transparent 30%),
+    radial-gradient(circle at 88% 42%, color-mix(in oklab, var(--sage) 10%, transparent), transparent 32%);
   z-index: -1;
 }
 
@@ -431,10 +433,19 @@ h3,
 
 .section-heading {
   display: grid;
-  max-width: 720px;
+  max-width: 760px;
   gap: 14px;
   margin: 0 auto 36px;
   text-align: center;
+  padding: 18px 24px;
+  border: 1px solid var(--panel-border);
+  border-radius: 16px;
+  background: var(--panel);
+  box-shadow: none;
+}
+
+.section-heading p {
+  color: var(--muted);
 }
 
 .section-heading.narrow {
@@ -444,36 +455,61 @@ h3,
 .timeline {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 18px;
+  gap: 16px;
   position: relative;
-}
-
-.timeline::before {
-  content: "";
-  position: absolute;
-  top: 29px;
-  left: 7%;
-  right: 7%;
-  height: 1px;
-  background: var(--line);
 }
 
 .timeline-item {
-  position: relative;
   display: grid;
-  gap: 8px;
-  align-content: start;
-  padding: 0 8px;
+  grid-template-columns: 24px minmax(0, 1fr);
+  gap: 14px 16px;
+  align-items: start;
+  padding: 18px 18px 20px;
+  border: 1px solid var(--panel-border);
+  border-radius: 16px;
+  background: var(--panel);
+}
+
+.timeline-rail {
+  position: relative;
+  grid-row: 1 / span 5;
+  align-self: stretch;
+  display: flex;
+  justify-content: center;
+}
+
+.timeline-rail::before {
+  content: "";
+  position: absolute;
+  top: 4px;
+  bottom: 2px;
+  left: 50%;
+  width: 1px;
+  transform: translateX(-50%);
+  background: color-mix(in oklab, var(--sage-deep) 38%, var(--line));
 }
 
 .timeline-marker {
-  width: 18px;
-  height: 18px;
-  margin: 20px auto 14px;
-  border: 4px solid var(--ivory);
+  position: relative;
+  z-index: 1;
+  width: 16px;
+  height: 16px;
+  margin-top: 6px;
+  border: 3px solid var(--panel);
   border-radius: 50%;
   background: var(--blush-deep);
-  box-shadow: 0 0 0 1px var(--gold);
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--gold) 88%, white);
+}
+
+.timeline-body {
+  display: grid;
+  gap: 8px;
+}
+
+.timeline-body time {
+  color: var(--sage-deep);
+  font-size: 0.9rem;
+  font-weight: 800;
 }
 
 .timeline-item time {
@@ -571,7 +607,8 @@ address {
   gap: 14px;
   padding: 28px;
   border-radius: 14px;
-  background: color-mix(in oklab, var(--sage) 16%, white);
+  border: 1px solid var(--panel-border);
+  background: var(--panel);
 }
 
 .dress-copy ul {
@@ -766,6 +803,11 @@ address {
   top: 102px;
   display: grid;
   gap: 14px;
+  padding: 20px 18px;
+  border: 1px solid var(--panel-border);
+  border-radius: 16px;
+  background: var(--panel);
+  box-shadow: none;
 }
 
 .rsvp-intro img {
@@ -802,6 +844,9 @@ address {
   width: min(100%, 520px);
   padding: clamp(34px, 4.5vw, 54px) clamp(22px, 3.5vw, 40px);
   margin: 0 auto;
+  border: 1px solid var(--panel-border);
+  border-radius: 16px;
+  background: var(--panel);
 }
 
 form {
@@ -1028,23 +1073,18 @@ small {
     grid-template-columns: 1fr;
   }
 
-  .timeline::before {
-    top: 0;
-    bottom: 0;
-    left: 9px;
-    width: 1px;
-    height: auto;
+  .timeline-item {
+    grid-template-columns: 22px minmax(0, 1fr);
+    padding: 16px 14px 18px;
   }
 
-  .timeline-item {
-    grid-template-columns: 18px 1fr;
-    column-gap: 18px;
-    padding: 0;
+  .timeline-rail::before {
+    top: 2px;
+    bottom: 0;
   }
 
   .timeline-marker {
-    grid-row: 1 / span 5;
-    margin: 6px 0 0;
+    margin-top: 4px;
   }
 
   .sponsor-layout,
@@ -1175,10 +1215,10 @@ small {
   .rsvp-card {
     overflow: hidden;
     padding: 0;
-    border: 1px solid color-mix(in oklab, var(--line) 78%, white);
     border-radius: 14px;
-    background: color-mix(in oklab, var(--white) 94%, var(--cream));
-    box-shadow: var(--shadow);
+    background: transparent;
+    border: 0;
+    box-shadow: none;
   }
 
   .rsvp-frame {
@@ -1187,7 +1227,7 @@ small {
 
   .rsvp-content {
     width: 100%;
-    padding: 18px 14px 22px;
+    padding: 16px 12px 20px;
   }
 
   .rsvp-content form {
