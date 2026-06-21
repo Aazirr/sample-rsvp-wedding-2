@@ -35,7 +35,7 @@ body {
   min-width: 320px;
   min-height: 100vh;
   background-color: var(--ivory);
-  background-image: url("/assets/pattern-botanical.svg");
+  background-image: url("/assets/pattern-botanical.png");
   background-size: 420px 420px;
 }
 

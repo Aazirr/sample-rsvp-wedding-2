@@ -146,7 +146,7 @@ function Icon({ name, className = "" }) {
 function Divider() {
   return (
     <div className="section-divider" aria-hidden="true">
-      <img src="/assets/divider-leaf.svg" alt="" />
+      <img src="/assets/divider-leaf.png" alt="" />
     </div>
   );
 }
@@ -271,10 +271,10 @@ export default function App() {
       <header className="hero" id="top">
         <img className="hero-photo" src="/photos/1.jpg" alt="Amelia and Theo in a sunlit Tagaytay garden" />
         <div className="hero-shade" />
-        <img className="hero-corner" src="/assets/floral-corner.svg" alt="" aria-hidden="true" />
+        <img className="hero-corner" src="/assets/floral-corner.png" alt="" aria-hidden="true" />
         <nav className="main-nav" aria-label="Wedding sections">
           <a className="nav-mark" href="#top" aria-label="Back to top">
-            <img src="/assets/monogram.svg" alt="" />
+            <img src="/assets/monogram.png" alt="" />
           </a>
           <div className="nav-links">
             {navItems.map(([id, label]) => (
@@ -286,7 +286,7 @@ export default function App() {
         </nav>
 
         <div className="hero-content">
-          <img className="monogram" src="/assets/monogram.svg" alt="" />
+          <img className="monogram" src="/assets/monogram.png" alt="" />
           <h1>
             <span>{couple.firstNames[0]}</span>
             <em>&</em>
@@ -308,7 +308,7 @@ export default function App() {
             <img src="/photos/6.jpg" alt="Amelia and Theo smiling during their engagement shoot" loading="lazy" />
           </div>
           <article className="letter-card">
-            <img className="letter-corner" src="/assets/floral-corner.svg" alt="" />
+            <img className="letter-corner" src="/assets/floral-corner.png" alt="" />
             <p className="script-note">A note from us</p>
             <h2>Our Story</h2>
             <p>
@@ -551,17 +551,17 @@ export default function App() {
 
         <section className="section rsvp-section" id="rsvp">
           <div className="rsvp-intro">
-            <img src="/assets/monogram.svg" alt="" />
+            <img src="/assets/monogram.png" alt="" />
             <h2>RSVP</h2>
             <p>Kindly respond by {couple.rsvpDeadline}.</p>
           </div>
 
           <div className="rsvp-card">
-            <img className="rsvp-frame" src="/assets/frame-rsvp.svg" alt="" aria-hidden="true" />
+            <img className="rsvp-frame" src="/assets/frame-rsvp.png" alt="" aria-hidden="true" />
             <div className="rsvp-content">
               {submitted ? (
                 <div className="thank-you" role="status">
-                  <img src="/assets/monogram.svg" alt="" />
+                  <img src="/assets/monogram.png" alt="" />
                   <h3>Thank you.</h3>
                   <p>
                     Your response has been saved for this demo. In production, this form can
@@ -629,7 +629,7 @@ export default function App() {
       </main>
 
       <footer className="footer">
-        <img src="/assets/monogram.svg" alt="" />
+        <img src="/assets/monogram.png" alt="" />
         <p>Questions? Contact {couple.contact}</p>
         <small>With love, {couple.names} · #AmeliaAndTheo</small>
       </footer>
