@@ -146,7 +146,7 @@ function Icon({ name, className = "" }) {
 function Divider() {
   return (
     <div className="section-divider" aria-hidden="true">
-      <img src="/assets/divider-leaf.png" alt="" />
+      <img src="/assets/divider-leaf.svg" alt="" />
     </div>
   );
 }

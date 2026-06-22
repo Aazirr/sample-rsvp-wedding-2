@@ -11,6 +11,7 @@
   --sage: oklch(0.67 0.055 138);
   --sage-deep: oklch(0.48 0.057 138);
   --gold: oklch(0.72 0.09 83);
+  --gold-soft: #e7aa51;
   --line: oklch(0.84 0.026 73);
   --panel: rgba(250, 245, 235, 0.8);
   --panel-border: color-mix(in oklab, var(--line) 68%, white);
@@ -582,6 +583,8 @@ address {
   grid-template-columns: 0.95fr 1.05fr;
   gap: 28px;
   align-items: stretch;
+  max-width: 920px;
+  margin: 0 auto;
 }
 
 .swatch-panel {
@@ -611,8 +614,15 @@ address {
 .dress-copy {
   display: grid;
   gap: 14px;
-  padding: 0;
+  padding: 28px;
   align-content: start;
+  align-self: start;
+  min-height: 100%;
+  border: 1px solid color-mix(in oklab, var(--gold) 44%, white);
+  border-radius: 10px;
+  background: color-mix(in oklab, var(--white) 94%, var(--cream));
+  box-shadow: 0 8px 20px rgba(95, 70, 36, 0.06);
+  text-align: left;
 }
 
 .dress-copy ul {
@@ -620,6 +630,11 @@ address {
   gap: 10px;
   margin: 0;
   padding-left: 1.1rem;
+}
+
+.dress-copy h3,
+.dress-copy li {
+  color: var(--gold-soft);
 }
 
 .entourage-grid {
@@ -1074,13 +1089,22 @@ small {
   }
 
   .timeline-item {
-    grid-template-columns: 22px minmax(0, 1fr);
-    padding: 8px 0;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    text-align: center;
   }
 
   .timeline-rail::before {
     top: 2px;
     bottom: 0;
+  }
+
+  .timeline-rail {
+    width: 22px;
+    min-height: 54px;
+    grid-row: auto;
   }
 
   .timeline-marker {
@@ -1135,8 +1159,33 @@ small {
     padding: 58px 0;
   }
 
+  .story-section,
+  .dress-layout,
+  .sponsor-layout,
+  .rsvp-section {
+    justify-items: center;
+  }
+
+  .story-photo,
+  .letter-card,
+  .dress-layout,
+  .dress-copy,
+  .principal-list,
+  .secondary-list,
+  .rsvp-intro,
+  .rsvp-card,
+  .footer {
+    width: 100%;
+    margin-inline: auto;
+  }
+
+  .story-photo {
+    max-width: 360px;
+  }
+
   .letter-card {
     padding: 26px 22px;
+    text-align: center;
   }
 
   .section-divider {
@@ -1157,6 +1206,8 @@ small {
 
   .swatch-panel {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: 100%;
+    justify-items: center;
   }
 
   .attendance-toggle,
@@ -1172,6 +1223,29 @@ small {
 
   .pair-row-two {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .dress-section .section-heading,
+  .dress-layout,
+  .dress-copy,
+  .timeline-body,
+  .schedule-actions,
+  .map-placeholder,
+  .principal-list,
+  .secondary-list article,
+  .footer {
+    text-align: center;
+  }
+
+  .dress-copy {
+    max-width: 360px;
+    justify-items: center;
+    padding: 24px 20px;
+  }
+
+  .dress-copy ul {
+    padding-left: 0;
+    list-style-position: inside;
   }
 
   .entourage-card {
@@ -1199,7 +1273,7 @@ small {
   }
 
   .entourage-card ul {
-    padding-left: 34px;
+    padding-left: 0;
   }
 
   .principal-list ul {
@@ -1210,6 +1284,20 @@ small {
   .secondary-list article {
     justify-items: center;
     text-align: center;
+  }
+
+  .timeline-body {
+    justify-items: center;
+    max-width: 34ch;
+  }
+
+  .schedule-actions {
+    gap: 12px;
+  }
+
+  .schedule-actions > * {
+    width: 100%;
+    max-width: 320px;
   }
 
   .rsvp-card {
@@ -1228,6 +1316,11 @@ small {
   .rsvp-content {
     width: 100%;
     padding: 16px 12px 20px;
+  }
+
+  .rsvp-intro {
+    justify-items: center;
+    text-align: center;
   }
 
   .rsvp-content form {
@@ -1274,6 +1367,8 @@ small {
 
   .gallery-shell {
     gap: 10px;
+    width: 100%;
+    justify-items: center;
   }
 
   .gallery-mobile-controls {

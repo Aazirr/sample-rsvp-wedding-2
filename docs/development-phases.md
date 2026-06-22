@@ -31,3 +31,6 @@
 - [x] Remove the extra boxed section treatments and soften the global botanical background.
 - [x] Expand the entourage and sponsors color treatment into full-width horizontal section bands.
 - [x] Revert `frame-rsvp` and `pattern-botanical` to their SVG assets.
+- [x] Revert the repeated section divider to `divider-leaf.svg`.
+- [x] Restyle the dress code section with a framed "What to wear" block and gold-toned copy.
+- [x] Center the mobile experience across stacked sections and tighten left-leaning layouts.
