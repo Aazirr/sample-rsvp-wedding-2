@@ -34,3 +34,4 @@
 - [x] Revert the repeated section divider to `divider-leaf.svg`.
 - [x] Restyle the dress code section with a framed "What to wear" block and gold-toned copy.
 - [x] Center the mobile experience across stacked sections and tighten left-leaning layouts.
+- [x] Normalize the mobile dress code swatch sizing and center the final row.
