@@ -135,6 +135,59 @@ const galleryPhotos = [
 
 const mealOptions = ["Chicken", "Beef", "Vegetarian", "Vegan", "Child's Meal"];
 
+// Ceremony start — October 18, 2026, 3:30 PM Philippine time (UTC+8).
+const WEDDING_DATE = new Date("2026-10-18T15:30:00+08:00");
+
+const countdownUnits = [
+  ["days", "Days"],
+  ["hours", "Hours"],
+  ["minutes", "Minutes"],
+  ["seconds", "Seconds"],
+];
+
+function getTimeLeft(target) {
+  const total = target.getTime() - Date.now();
+  if (total <= 0) {
+    return { total: 0, days: 0, hours: 0, minutes: 0, seconds: 0 };
+  }
+  const seconds = Math.floor((total / 1000) % 60);
+  const minutes = Math.floor((total / 1000 / 60) % 60);
+  const hours = Math.floor((total / (1000 * 60 * 60)) % 24);
+  const days = Math.floor(total / (1000 * 60 * 60 * 24));
+  return { total, days, hours, minutes, seconds };
+}
+
+function Countdown() {
+  const [timeLeft, setTimeLeft] = useState(() => getTimeLeft(WEDDING_DATE));
+
+  useEffect(() => {
+    const timer = setInterval(() => setTimeLeft(getTimeLeft(WEDDING_DATE)), 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  return (
+    <section className="countdown-band" aria-label="Countdown to the wedding day">
+      <div className="countdown-inner">
+        <p className="script-note countdown-note">Counting down to</p>
+        <h2 className="countdown-title">Forever begins in</h2>
+        {timeLeft.total <= 0 ? (
+          <p className="countdown-live">Today is the day. Welcome, with all our love.</p>
+        ) : (
+          <div className="countdown-grid" role="timer" aria-live="off">
+            {countdownUnits.map(([key, label]) => (
+              <div className="countdown-unit" key={key}>
+                <span className="countdown-value">{String(timeLeft[key]).padStart(2, "0")}</span>
+                <span className="countdown-label">{label}</span>
+              </div>
+            ))}
+          </div>
+        )}
+        <p className="countdown-date">{couple.date} · {couple.ceremonyTime}</p>
+      </div>
+    </section>
+  );
+}
+
 function Icon({ name, className = "" }) {
   return (
     <svg className={`icon ${className}`} aria-hidden="true">
@@ -211,6 +264,11 @@ export default function App() {
       details: "Ceremony, cocktail hour, and reception.",
     });
     return `https://calendar.google.com/calendar/render?${params.toString()}`;
+  }, []);
+
+  const mapsUrl = useMemo(() => {
+    const query = encodeURIComponent(`${couple.venue}, ${couple.city}`);
+    return `https://www.google.com/maps/search/?api=1&query=${query}`;
   }, []);
 
   useEffect(() => {
@@ -303,6 +361,8 @@ export default function App() {
       </header>
 
       <main>
+        <Countdown />
+
         <section className="section story-section" id="story">
           <div className="story-photo">
             <img src="/photos/6.jpg" alt="Amelia and Theo smiling during their engagement shoot" loading="lazy" />
@@ -352,9 +412,21 @@ export default function App() {
               Open in Google Calendar
             </a>
           </div>
-          <div className="map-placeholder" role="img" aria-label="Map placeholder for Alta Veranda in Tagaytay City">
-            <span>Map placeholder</span>
-            <strong>Alta Veranda, Tagaytay City</strong>
+          <div className="venue-card">
+            <div className="venue-map" aria-hidden="true">
+              <span className="venue-pin">
+                <Icon name="petals" />
+              </span>
+            </div>
+            <div className="venue-details">
+              <p className="script-note venue-eyebrow">Find your way</p>
+              <h3>{couple.venue}</h3>
+              <address>{couple.city}</address>
+              <p>Set in the cool Tagaytay highlands, a short drive from the city — allow extra travel time for the afternoon ceremony.</p>
+              <a className="secondary-button" href={mapsUrl} target="_blank" rel="noreferrer">
+                Get Directions
+              </a>
+            </div>
           </div>
         </section>
 

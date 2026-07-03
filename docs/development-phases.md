@@ -35,3 +35,6 @@
 - [x] Restyle the dress code section with a framed "What to wear" block and gold-toned copy.
 - [x] Center the mobile experience across stacked sections and tighten left-leaning layouts.
 - [x] Normalize the mobile dress code swatch sizing and center the final row.
+- [x] Add a live countdown band (days/hours/minutes/seconds to the ceremony) as a deep-botanical contrast section between the hero and story — delivers the advertised Signature "countdown timer" feature.
+- [x] Rebuild the Photos gallery as a clean uniform 4×5 grid, replacing the ragged masonry that left large gaps.
+- [x] Replace the dashed map placeholder with a styled venue card (decorative map, floral pin, and Get Directions link to Google Maps).

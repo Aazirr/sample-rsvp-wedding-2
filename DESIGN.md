@@ -25,12 +25,18 @@ Soft floral wedding invitation with a cinematic photo-led hero, invitation-paper
 
 - Fixed translucent cream navigation with monogram mark and active section state.
 - Full-bleed hero with real couple photography, monogram, floral corner, and scroll cue.
+- Deep-botanical countdown band (live days/hours/minutes/seconds to the ceremony) placed between the hero and story to break the light-neutral section rhythm with a single dark, high-contrast moment.
 - Letter card for the story section with a restrained floral corner.
 - Timeline schedule with floral-dot markers and calendar actions.
+- Venue card with a stylized decorative map, floral map pin, and a "Get Directions" link to Google Maps (replaces the earlier dashed map placeholder).
 - Dress-code swatches separated from the UI palette.
 - Entourage and sponsor cards with local SVG line icons.
-- Responsive photo gallery with cream-tinted lightbox.
+- Responsive photo gallery: a clean, uniform 4×5 aspect grid (4 columns → 2 columns → mobile snap-slider) with a cream-tinted lightbox. Uniform tiles replace the earlier ragged masonry to keep the grid gap-free at any photo count.
 - RSVP frame card with conditional fields, friendly inline validation, honeypot, and thank-you state.
+
+## Section rhythm
+
+Sections are mostly light (ivory/cream) to let photography lead. To avoid an "all sections feel identical" beige page, the layout uses one deliberate dark contrast band (the deep-green countdown) near the top, full-width cream bands behind Entourage and Sponsors, and the framed dress-code and venue treatments as secondary accents.
 
 ## Assets
 
@@ -50,4 +56,4 @@ Photos are reused from `public/photos`.
 
 ## Motion
 
-Hero photography has a slow load drift and the hero typography rises in gently. The scroll cue moves subtly. `prefers-reduced-motion` disables animation and smooth scrolling.
+Hero photography has a slow load drift and the hero typography rises in gently. The scroll cue moves subtly. Gallery tiles lift and darken slightly on hover. The countdown ticks once per second (live data, not decorative animation). `prefers-reduced-motion` disables animation and smooth scrolling.
