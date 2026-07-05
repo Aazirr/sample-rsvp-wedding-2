@@ -922,6 +922,7 @@ address {
 
 .gallery-shell {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 12px;
 }
 
@@ -1564,6 +1565,8 @@ small {
 
   .gallery-grid {
     display: flex;
+    width: 100%;
+    min-width: 0;
     gap: 10px;
     overflow-x: auto;
     padding: 2px 2px 8px;
@@ -1578,11 +1581,8 @@ small {
 
   .gallery-tile {
     flex: 0 0 82%;
-    scroll-snap-align: center;
-  }
-
-  .gallery-tile {
     aspect-ratio: 3 / 4;
+    scroll-snap-align: center;
   }
 }
 
