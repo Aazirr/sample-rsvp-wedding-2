@@ -38,3 +38,4 @@
 - [x] Add a live countdown band (days/hours/minutes/seconds to the ceremony) as a deep-botanical contrast section between the hero and story — delivers the advertised Signature "countdown timer" feature.
 - [x] Rebuild the Photos gallery as a clean uniform 4×5 grid, replacing the ragged masonry that left large gaps.
 - [x] Replace the dashed map placeholder with a styled venue card (decorative map, floral pin, and Get Directions link to Google Maps).
+- [x] Rework the RSVP into an invite-only guest-management system (modeled on `Family/Clyde/wedding-invitation`): personalized invitation cards with Accept/Decline, a `?invite=<token>` link per guest, and a Guest Manager admin demo (stats, add-guest link generation, copy link, remove). Runs client-side with a seeded list and localStorage persistence; ships with a default demo invitation.

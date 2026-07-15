@@ -133,7 +133,67 @@ const galleryPhotos = [
   { src: "/photos/9.jpg", alt: "A romantic candid photo from the engagement session" },
 ];
 
-const mealOptions = ["Chicken", "Beef", "Vegetarian", "Vegan", "Child's Meal"];
+// --- Guest invitations (client-side demo) ---
+// In production this is backed by the admin: the couple adds each guest, the
+// system mints an unguessable token, and that token becomes the guest's
+// personal invite link. Here it runs entirely in the browser with localStorage
+// so the sample can demonstrate the full flow without a backend.
+const GUESTS_KEY = "ameliaTheoGuests";
+
+// The invite shown by default when a visitor arrives without a personal link.
+const DEMO_TOKEN = "demo-amelia-theo";
+
+const initialGuests = [
+  { id: "g-demo", name: "Isabella Reyes", token: DEMO_TOKEN, seats: 2, attending: 2, status: "pending", respondedAt: null },
+  { id: "g-navarro", name: "The Navarro Family", token: "aG7kQ2mZ", seats: 4, attending: 4, status: "accepted", respondedAt: "2026-07-02T09:20:00Z" },
+  { id: "g-cruz", name: "Sofia & Marco Cruz", token: "Bn3Rw8Qe", seats: 2, attending: 2, status: "accepted", respondedAt: "2026-07-05T18:40:00Z" },
+  { id: "g-lim", name: "Daniel Lim", token: "9xVt4Lp1", seats: 1, attending: 0, status: "declined", respondedAt: "2026-07-03T14:05:00Z" },
+  { id: "g-tan", name: "Katrina Tan", token: "Up5Yc1Da", seats: 1, attending: 1, status: "pending", respondedAt: null },
+];
+
+const TOKEN_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789";
+
+function generateToken(length = 8) {
+  let out = "";
+  for (let i = 0; i < length; i += 1) {
+    out += TOKEN_ALPHABET[Math.floor(Math.random() * TOKEN_ALPHABET.length)];
+  }
+  return out;
+}
+
+function loadGuests() {
+  if (typeof window === "undefined") return initialGuests;
+  try {
+    const raw = localStorage.getItem(GUESTS_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed) && parsed.length) return parsed;
+    }
+  } catch {
+    /* ignore malformed storage and fall back to the seed list */
+  }
+  return initialGuests;
+}
+
+function getInviteTokenFromUrl() {
+  if (typeof window === "undefined") return null;
+  return new URLSearchParams(window.location.search).get("invite");
+}
+
+function inviteUrl(token) {
+  if (typeof window === "undefined") return `?invite=${token}`;
+  const { origin, pathname } = window.location;
+  return `${origin}${pathname}?invite=${token}#rsvp`;
+}
+
+function formatRespondedAt(value) {
+  if (!value) return null;
+  try {
+    return new Date(value).toLocaleDateString("en-PH", { month: "short", day: "numeric" });
+  } catch {
+    return null;
+  }
+}
 
 // Ceremony start — October 18, 2026, 3:30 PM Philippine time (UTC+8).
 const WEDDING_DATE = new Date("2026-10-18T15:30:00+08:00");
@@ -230,22 +290,219 @@ function createCalendarFile() {
   URL.revokeObjectURL(url);
 }
 
+function InvitationCard({ guest, isDemo, onRespond }) {
+  const [editing, setEditing] = useState(false);
+  const [seats, setSeats] = useState(1);
+
+  useEffect(() => {
+    setEditing(false);
+    if (guest) setSeats(guest.attending || guest.seats || 1);
+  }, [guest]);
+
+  if (!guest) {
+    return (
+      <div className="invite-card invite-card-invalid" role="alert">
+        <span className="invite-mark" aria-hidden="true">✦</span>
+        <h3>This invitation could not be found</h3>
+        <p>
+          The link may be mistyped or expired. Please reach out to the couple and
+          they will send a fresh invitation.
+        </p>
+      </div>
+    );
+  }
+
+  const responded = (guest.status === "accepted" || guest.status === "declined") && !editing;
+
+  const accept = () => onRespond(guest.token, "accepted", Math.min(Math.max(seats, 1), guest.seats));
+  const decline = () => onRespond(guest.token, "declined", 0);
+
+  return (
+    <div className="invite-card">
+      {isDemo && <span className="invite-demo-tag">Demo invitation</span>}
+      <img className="invite-monogram" src="/assets/monogram.png" alt="" />
+      <p className="invite-eyebrow">You are cordially invited</p>
+
+      <p className="invite-welcome-label">Welcome,</p>
+      <p className="invite-name">{guest.name}</p>
+
+      <p className="invite-body">
+        to witness the marriage of
+        <span className="invite-couple">{couple.names}</span>
+        <span className="invite-when">{couple.date} · {couple.ceremonyTime}</span>
+      </p>
+
+      <p className="invite-note">
+        <strong>Please note:</strong> this invitation is personal to the named guest and admits{" "}
+        {guest.seats === 1 ? "one seat" : `up to ${guest.seats} seats`}. We are unable to
+        accommodate additional guests beyond your reserved seats.
+      </p>
+
+      {responded ? (
+        <div className="invite-confirmed" role="status">
+          <span className={`invite-status-mark ${guest.status}`} aria-hidden="true">
+            {guest.status === "accepted" ? "✓" : "✕"}
+          </span>
+          <p className="invite-status-line">
+            {guest.status === "accepted"
+              ? `Joyfully accepted${guest.attending > 1 ? ` — ${guest.attending} of you` : ""}. We can't wait to celebrate with you.`
+              : "Regretfully declined. You will be dearly missed."}
+          </p>
+          <button className="invite-change" type="button" onClick={() => setEditing(true)}>
+            Change response
+          </button>
+        </div>
+      ) : (
+        <div className="invite-respond">
+          {guest.seats > 1 && (
+            <label className="invite-seats">
+              <span>How many will attend?</span>
+              <select value={seats} onChange={(e) => setSeats(Number(e.target.value))}>
+                {Array.from({ length: guest.seats }, (_, i) => i + 1).map((n) => (
+                  <option key={n} value={n}>{n}</option>
+                ))}
+              </select>
+            </label>
+          )}
+          <p className="invite-prompt">Will you join us?</p>
+          <div className="invite-actions">
+            <button className="primary-button" type="button" onClick={accept}>Joyfully Accept</button>
+            <button className="secondary-button" type="button" onClick={decline}>Regretfully Decline</button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function GuestManager({ guests, onAdd, onDelete, onOpenInvite }) {
+  const [name, setName] = useState("");
+  const [seats, setSeats] = useState("2");
+  const [copiedId, setCopiedId] = useState(null);
+  const [created, setCreated] = useState(null);
+
+  const stats = useMemo(() => {
+    const base = { total: guests.length, accepted: 0, declined: 0, pending: 0, seats: 0 };
+    guests.forEach((g) => {
+      base[g.status] = (base[g.status] || 0) + 1;
+      if (g.status === "accepted") base.seats += g.attending || 0;
+    });
+    return base;
+  }, [guests]);
+
+  const copyLink = (token, id) => {
+    const url = inviteUrl(token);
+    if (navigator.clipboard?.writeText) {
+      navigator.clipboard.writeText(url).then(() => {
+        setCopiedId(id);
+        setTimeout(() => setCopiedId((c) => (c === id ? null : c)), 1800);
+      });
+    }
+  };
+
+  const addGuest = () => {
+    const trimmed = name.trim();
+    if (!trimmed) return;
+    const guest = onAdd(trimmed, Number(seats) || 1);
+    setCreated(guest);
+    setName("");
+    setSeats("2");
+  };
+
+  return (
+    <div className="guest-manager">
+      <div className="gm-banner">
+        <strong>Guest Manager</strong> — the couple's private view. Add a guest to mint a
+        unique invite link; each link opens that guest's personal invitation.
+      </div>
+
+      <div className="gm-stats">
+        {[
+          ["Invited", stats.total],
+          ["Accepted", stats.accepted],
+          ["Declined", stats.declined],
+          ["Pending", stats.pending],
+        ].map(([label, value]) => (
+          <div className="gm-stat" key={label}>
+            <span className="gm-stat-value">{value}</span>
+            <span className="gm-stat-label">{label}</span>
+          </div>
+        ))}
+      </div>
+      <p className="gm-seats-note">{stats.seats} seat{stats.seats === 1 ? "" : "s"} confirmed so far.</p>
+
+      <div className="gm-add">
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && addGuest()}
+          placeholder="Guest or family name"
+          aria-label="Guest name"
+        />
+        <select value={seats} onChange={(e) => setSeats(e.target.value)} aria-label="Seats">
+          {[1, 2, 3, 4, 5, 6].map((n) => (
+            <option key={n} value={n}>{n} seat{n === 1 ? "" : "s"}</option>
+          ))}
+        </select>
+        <button className="primary-button" type="button" onClick={addGuest}>Create Invite</button>
+      </div>
+
+      {created && (
+        <div className="gm-created">
+          <span className="gm-created-label">Invite link for {created.name}</span>
+          <div className="gm-created-row">
+            <code>{inviteUrl(created.token)}</code>
+            <button className="secondary-button" type="button" onClick={() => copyLink(created.token, "created")}>
+              {copiedId === "created" ? "Copied" : "Copy"}
+            </button>
+          </div>
+        </div>
+      )}
+
+      <ul className="gm-list">
+        {guests.map((g) => {
+          const responded = formatRespondedAt(g.respondedAt);
+          return (
+            <li className="gm-guest" key={g.id}>
+              <div className="gm-guest-main">
+                <span className="gm-guest-name">{g.name}</span>
+                <span className={`gm-badge ${g.status}`}>{g.status}</span>
+              </div>
+              <p className="gm-guest-meta">
+                {g.seats} seat{g.seats === 1 ? "" : "s"}
+                {g.status === "accepted" && ` · ${g.attending} attending`}
+                {responded ? ` · responded ${responded}` : " · awaiting reply"}
+              </p>
+              <div className="gm-guest-actions">
+                <button type="button" onClick={() => onOpenInvite(g.token)}>Preview</button>
+                <button type="button" onClick={() => copyLink(g.token, g.id)}>
+                  {copiedId === g.id ? "Copied ✓" : "Copy link"}
+                </button>
+                <button type="button" className="gm-delete" onClick={() => onDelete(g.id)}>Remove</button>
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+}
+
 export default function App() {
   const [activeSection, setActiveSection] = useState("story");
   const [lightboxIndex, setLightboxIndex] = useState(null);
-  const [submitted, setSubmitted] = useState(false);
-  const [errors, setErrors] = useState({});
   const galleryRailRef = useRef(null);
-  const [formData, setFormData] = useState({
-    fullName: "",
-    attendance: "",
-    guests: "1",
-    meal: "Chicken",
-    honeypot: "",
-  });
+
+  const [guests, setGuests] = useState(loadGuests);
+  const [rsvpView, setRsvpView] = useState("invite");
+  const [activeToken, setActiveToken] = useState(() => getInviteTokenFromUrl() || DEMO_TOKEN);
+
+  const urlToken = getInviteTokenFromUrl();
+  const activeGuest = guests.find((g) => g.token === activeToken) || null;
+  const isDemoInvite = !urlToken && activeToken === DEMO_TOKEN;
 
   const selectedPhoto = lightboxIndex === null ? null : galleryPhotos[lightboxIndex];
-  const attending = formData.attendance === "yes";
 
   const scrollGallery = (direction) => {
     const rail = galleryRailRef.current;
@@ -302,26 +559,54 @@ export default function App() {
     return () => window.removeEventListener("keydown", onKey);
   }, [lightboxIndex]);
 
-  const updateForm = (event) => {
-    const { name, value } = event.target;
-    setFormData((current) => ({ ...current, [name]: value }));
-    setErrors((current) => ({ ...current, [name]: "" }));
+  useEffect(() => {
+    try {
+      localStorage.setItem(GUESTS_KEY, JSON.stringify(guests));
+    } catch {
+      /* storage may be unavailable (private mode); demo still works in-memory */
+    }
+  }, [guests]);
+
+  // A guest arriving via their personal link lands directly on their invitation.
+  useEffect(() => {
+    if (urlToken) {
+      setRsvpView("invite");
+      document.getElementById("rsvp")?.scrollIntoView({ behavior: "smooth" });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const respondToInvite = (token, status, attending) => {
+    setGuests((current) =>
+      current.map((g) =>
+        g.token === token
+          ? { ...g, status, attending, respondedAt: new Date().toISOString() }
+          : g
+      )
+    );
   };
 
-  const submitRsvp = (event) => {
-    event.preventDefault();
-    const nextErrors = {};
+  const addGuest = (name, seats) => {
+    const guest = {
+      id: `g-${generateToken(6)}`,
+      name,
+      token: generateToken(8),
+      seats,
+      attending: seats,
+      status: "pending",
+      respondedAt: null,
+    };
+    setGuests((current) => [...current, guest]);
+    return guest;
+  };
 
-    if (formData.honeypot) return;
-    if (!formData.fullName.trim()) nextErrors.fullName = "Please share the name we should look for on the guest list.";
-    if (!formData.attendance) nextErrors.attendance = "Please let us know whether you can join us.";
-    if (attending && !formData.meal) nextErrors.meal = "Please choose a meal so we can prepare properly.";
+  const deleteGuest = (id) => {
+    setGuests((current) => current.filter((g) => g.id !== id));
+  };
 
-    setErrors(nextErrors);
-    if (Object.keys(nextErrors).length) return;
-
-    localStorage.setItem("ameliaTheoRsvp", JSON.stringify({ ...formData, submittedAt: new Date().toISOString() }));
-    setSubmitted(true);
+  const openInvite = (token) => {
+    setActiveToken(token);
+    setRsvpView("invite");
   };
 
   return (
@@ -628,78 +913,49 @@ export default function App() {
         <section className="section rsvp-section" id="rsvp">
           <div className="rsvp-intro">
             <img src="/assets/monogram.png" alt="" />
+            <p className="script-note">You're invited</p>
             <h2>RSVP</h2>
-            <p>Kindly respond by {couple.rsvpDeadline}.</p>
+            <p>
+              Each guest receives a personal invitation link — there is no open form, so
+              seating stays exactly as planned. Kindly respond by {couple.rsvpDeadline}.
+            </p>
+            <div className="rsvp-toggle" role="tablist" aria-label="RSVP view">
+              <button
+                type="button"
+                role="tab"
+                aria-selected={rsvpView === "invite"}
+                className={rsvpView === "invite" ? "is-active" : ""}
+                onClick={() => setRsvpView("invite")}
+              >
+                Your Invitation
+              </button>
+              <button
+                type="button"
+                role="tab"
+                aria-selected={rsvpView === "manage"}
+                className={rsvpView === "manage" ? "is-active" : ""}
+                onClick={() => setRsvpView("manage")}
+              >
+                Guest Manager
+              </button>
+            </div>
+            <p className="rsvp-demo-hint">
+              Demo tip: open <strong>Guest Manager</strong> to see how the couple creates a
+              unique invite link for every guest.
+            </p>
           </div>
 
-          <div className="rsvp-card">
-            <img className="rsvp-frame" src="/assets/frame-rsvp.svg" alt="" aria-hidden="true" />
-            <div className="rsvp-content">
-              {submitted ? (
-                <div className="thank-you" role="status">
-                  <img src="/assets/monogram.png" alt="" />
-                  <h3>Thank you.</h3>
-                  <p>
-                    Your response has been saved for this demo. In production, this form can
-                    connect to Google Sheets, Airtable, or a database endpoint.
-                  </p>
-                </div>
-              ) : (
-                <form onSubmit={submitRsvp} noValidate>
-                  <label className="honeypot">
-                    Leave this blank
-                    <input name="honeypot" value={formData.honeypot} onChange={updateForm} tabIndex="-1" autoComplete="off" />
-                  </label>
-
-                  <label>
-                    <span>Full Name</span>
-                    <input name="fullName" value={formData.fullName} onChange={updateForm} required autoComplete="name" />
-                    {errors.fullName && <small>{errors.fullName}</small>}
-                  </label>
-
-                  <fieldset>
-                    <legend>Attendance</legend>
-                    <div className="attendance-toggle">
-                      <label>
-                        <input type="radio" name="attendance" value="yes" checked={formData.attendance === "yes"} onChange={updateForm} />
-                        <span>Joyfully Accepts</span>
-                      </label>
-                      <label>
-                        <input type="radio" name="attendance" value="no" checked={formData.attendance === "no"} onChange={updateForm} />
-                        <span>Regretfully Declines</span>
-                      </label>
-                    </div>
-                    {errors.attendance && <small>{errors.attendance}</small>}
-                  </fieldset>
-
-                  {attending && (
-                    <div className="conditional-fields">
-                      <label>
-                        <span>Number of Guests</span>
-                        <select name="guests" value={formData.guests} onChange={updateForm}>
-                          {[1, 2, 3, 4].map((count) => <option key={count}>{count}</option>)}
-                        </select>
-                      </label>
-                      <label>
-                        <span>Meal Choice</span>
-                        <select name="meal" value={formData.meal} onChange={updateForm}>
-                          {mealOptions.map((meal) => <option key={meal}>{meal}</option>)}
-                        </select>
-                        {errors.meal && <small>{errors.meal}</small>}
-                      </label>
-                    </div>
-                  )}
-
-                  <label className="consent">
-                    <input type="checkbox" required />
-                    <span>I understand this is a demo RSVP and production storage is a TODO.</span>
-                  </label>
-
-                  <button className="primary-button" type="submit">Send Response</button>
-                  <p className="form-note">TODO: replace local demo storage with POST /api/rsvp.</p>
-                </form>
-              )}
-            </div>
+          <div className="rsvp-panel">
+            {rsvpView === "invite" ? (
+              <InvitationCard guest={activeGuest} isDemo={isDemoInvite} onRespond={respondToInvite} />
+            ) : (
+              <GuestManager
+                guests={guests}
+                onAdd={addGuest}
+                onDelete={deleteGuest}
+                onOpenInvite={openInvite}
+              />
+            )}
           </div>
         </section>
       </main>

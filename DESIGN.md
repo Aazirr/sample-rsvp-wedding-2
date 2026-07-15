@@ -32,7 +32,13 @@ Soft floral wedding invitation with a cinematic photo-led hero, invitation-paper
 - Dress-code swatches separated from the UI palette.
 - Entourage and sponsor cards with local SVG line icons.
 - Responsive photo gallery: a clean, uniform 4×5 aspect grid (4 columns → 2 columns → mobile snap-slider) with a cream-tinted lightbox. Uniform tiles replace the earlier ragged masonry to keep the grid gap-free at any photo count.
-- RSVP frame card with conditional fields, friendly inline validation, honeypot, and thank-you state.
+- Invitation-based RSVP with two views toggled from the intro:
+  - **Your Invitation** — a personalized invitation card that greets the guest by name ("Welcome, [Name]"), states their seat allowance, and offers **Joyfully Accept / Regretfully Decline**. Responses are changeable, and a graceful themed "invitation could not be found" state handles unknown/expired links.
+  - **Guest Manager** — the couple's admin demo: response stats (invited / accepted / declined / pending), an add-guest field that mints a unique invite link per guest, and a guest list with status badges, copy-link, preview, and remove.
+
+## RSVP invitation model
+
+The RSVP is invite-only, mirroring the reference system in `Family/Clyde/wedding-invitation`: the couple creates each guest, the app mints an unguessable token, and that token is the guest's personal link (`?invite=<token>`). There is no open form, so seating stays controlled and duplicates are structurally impossible. This sample runs the whole flow client-side — a seeded guest list, `localStorage` persistence, and a default "Demo invitation" shown when no personal link is present — so the experience is demonstrable without a backend. In production this maps to the admin + database + `/invite/[token]` routes of the reference implementation.
 
 ## Section rhythm
 
